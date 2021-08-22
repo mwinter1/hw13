@@ -1,0 +1,25 @@
+{
+  "name": "hw13",
+  "version": "1.0.0",
+  "description": "E-Commerce Back End project. Pseudo coding/folder structure completed as a class.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwinter1/hw13.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwinter1/hw13/issues"
+  },
+  "homepage": "https://github.com/mwinter1/hw13#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sequelize": "^6.6.5"
+  }
+}

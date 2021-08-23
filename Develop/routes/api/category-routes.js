@@ -32,14 +32,29 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new category
+  Category.create({
+    category_name: req.body.category_name,
+  })
 });
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
+  Category.update(req.body, {
+    where: {
+      id: req.params.id
+    }
+  })
+  // insert error line if no valid db entered 
 });
 
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
+  Category.delete({
+    where: {
+      id: req.params.id,
+    }
+  })
+  // insert error line if no valid entry 
 });
 
 module.exports = router;

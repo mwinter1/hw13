@@ -1,43 +1,64 @@
 const router = require('express').Router();
+// const { eq } = require('sequelize/types/lib/operators');
 const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
 
 // get all products
-router.get('/', async (req, res) => {
-  try {
-    let allProduct = await Product.findAll();
-    res.status(200).json(allProduct);
-  } catch (error) {
+router.get('/', (req, res) => {
+  Product.findAll({
+    attributes: ['id', 'product_name', 'price', 'stock', 'category_ID'],
+    include: [
+      {
+        model: Category, 
+        attributes: ['id', 'category_name']
+      },
+      {
+        model: Tag, 
+        attributes: ['id', 'tag_name']
+      }
+    ]
+  })
+  .then(dbProductData => res.json(dbProductData))
+  .catch(err => {
     res.status(500).json(err);
-  }
+  })
 });
 
 // // get one product
-// router.get('/:id', (req, res) => {
+// router.get('/:id', async (req, res) => {
 //   // find a single product by its `id`
 //   // be sure to include its associated Category and Tag data
 //   Product.findOne({
 //     where: {
-//       id.req.params.id,
+//       id: req.params.id
+//     },
+//     attributes: ['id', 'product_name', 'price', 'stock', 'category_ID'],
+//     include: [
+//       {
+//         model: Category, 
+//         attributes: ['id', 'category_name'],
+//       },
+//       {
+//         model: Tag,
+//         attributes: ['id', 'tag_name'],
+//       }
+//     ]
+//   })
+//   .then(dbProductData => {
+//     if (!dbProductData){
+//       res.status(404).json(err);
+//       return;
 //     }
-//     {
-//     attributes: ['id', 'product-name', 'price', 'stock', 'category_ID']  
-//     include: [{
-//       model: Category, 
-//       attributes: ['id', 'category_name']
-//     }
-//   }
-//     }]
-//     [{
-//       model: Tag,
-//       attrbitues: ['id', 'tag_name']
-//     }]
-//   });
+//     res.json(dbProductData);
+//   })
+//     .catch(err => {
+//     res.status(500).json(err);
+//   })
 // });
 
 // // create new product
-// router.post('/', (req, res) => {
+// router.post('/', async (req, res) => {
 //   /* req.body should look like this...
 //     {
 //       product_name: "Basketball",
@@ -67,6 +88,7 @@ router.get('/', async (req, res) => {
 //       res.status(400).json(err);
 //     });
 // });
+
 
 // // update product
 // router.put('/:id', (req, res) => {
